@@ -43,6 +43,22 @@ internal struct Directory {
             .contentsOfDirectory(at: url, includingPropertiesForKeys: [.isRegularFileKey, .canonicalPathKey])
             .map { url in File(url: url) }
     }
+
+    /// Deletes all files in this directory.
+    func deleteAllFiles() throws {
+        let temporaryDirectory = try Directory(withSubdirectoryPath: "com.datadoghq/temp")
+        defer { try? FileManager.default.removeItem(at: temporaryDirectory.url) }
+
+        _ = try FileManager.default.replaceItemAt(url, withItemAt: temporaryDirectory.url)
+    }
+
+    /// Moves all files from this directory to `destinationDirectory`.
+    func moveAllFilesTo(_ destinationDirectory: Directory) throws {
+        try files().forEach { file in
+            let destinationFileURL = destinationDirectory.url.appendingPathComponent(file.name)
+            try? FileManager.default.moveItem(at: file.url, to: destinationFileURL)
+        }
+    }
 }
 
 /// Creates subdirectory at given path in `/Library/Caches` if it does not exist. Might throw `ProgrammerError` when it's not possible.
