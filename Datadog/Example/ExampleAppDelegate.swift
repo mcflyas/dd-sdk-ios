@@ -8,8 +8,8 @@ import UIKit
 import Datadog
 
 var logger: Logger!
-var tracer: OTTracer { Global.sharedTracer }
-var rumMonitor: DDRUMMonitor { Global.rum }
+var tracer: OTTracer { GlobalDatadog.sharedTracer }
+var rumMonitor: DDRUMMonitor { GlobalDatadog.rum }
 
 var appConfiguration: AppConfiguration!
 
@@ -51,14 +51,14 @@ class ExampleAppDelegate: UIResponder, UIApplicationDelegate {
         #endif
 
         // Register Tracer
-        Global.sharedTracer = Tracer.initialize(
+        GlobalDatadog.sharedTracer = Tracer.initialize(
             configuration: Tracer.Configuration(
                 sendNetworkInfo: true
             )
         )
 
         // Register RUMMonitor
-        Global.rum = RUMMonitor.initialize()
+        GlobalDatadog.rum = RUMMonitor.initialize()
 
         // Set highest verbosity level to see debugging logs from the SDK
         Datadog.verbosityLevel = .debug

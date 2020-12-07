@@ -15,9 +15,9 @@ class RUMIntegrationsTests: XCTestCase {
         defer { RUMFeature.instance = nil }
 
         // given
-        Global.rum = RUMMonitor.initialize()
-        Global.rum.startView(viewController: mockView)
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        GlobalDatadog.rum.startView(viewController: mockView)
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
         // then
         let attributes = try XCTUnwrap(integration.currentRUMContextAttributes)
@@ -41,9 +41,9 @@ class RUMIntegrationsTests: XCTestCase {
         defer { RUMFeature.instance = nil }
 
         // given
-        Global.rum = RUMMonitor.initialize()
-        Global.rum.startView(viewController: mockView)
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        GlobalDatadog.rum.startView(viewController: mockView)
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
         // then
         let attributes = try XCTUnwrap(integration.currentRUMContextAttributes)
@@ -56,7 +56,7 @@ class RUMIntegrationsTests: XCTestCase {
         defer { RUMFeature.instance = nil }
 
         // when
-        XCTAssertTrue(Global.rum is DDNoopRUMMonitor)
+        XCTAssertTrue(GlobalDatadog.rum is DDNoopRUMMonitor)
 
         // then
         XCTAssertNil(integration.currentRUMContextAttributes)
@@ -81,9 +81,9 @@ class RUMErrorsIntegrationTests: XCTestCase {
         defer { RUMFeature.instance = nil }
 
         // given
-        Global.rum = RUMMonitor.initialize()
-        Global.rum.startView(viewController: mockView)
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        GlobalDatadog.rum.startView(viewController: mockView)
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
         // when
         integration.addError(with: "error message", stack: "Foo.swift:10", source: .logger)

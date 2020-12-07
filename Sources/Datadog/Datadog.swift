@@ -71,7 +71,7 @@ public class Datadog {
     /// Default is `false`.
     public static var debugRUM: Bool = false {
         didSet {
-            (Global.rum as? RUMMonitor)?.enableRUMDebugging(debugRUM)
+            (GlobalDatadog.rum as? RUMMonitor)?.enableRUMDebugging(debugRUM)
         }
     }
 

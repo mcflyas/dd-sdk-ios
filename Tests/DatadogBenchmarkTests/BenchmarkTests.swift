@@ -50,8 +50,8 @@ class BenchmarkTests: XCTestCase {
                 .build()
         )
 
-        Global.rum = RUMMonitor.initialize()
-        Global.sharedTracer = Tracer.initialize(configuration: .init())
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        GlobalDatadog.sharedTracer = Tracer.initialize(configuration: .init())
     }
 
     // MARK: - `HTTPServerMock` connection

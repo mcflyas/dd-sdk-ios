@@ -90,7 +90,7 @@ Datadog.initialize(
     ```swift
     import Datadog
 
-    Global.rum = RUMMonitor.initialize()
+    GlobalDatadog.rum = RUMMonitor.initialize()
     ```
 
 The RUM SDK offers two instrumentation methods:
@@ -111,7 +111,7 @@ Datadog.Configuration
    .trackUIKitRUMViews(using: predicate)
    .build()
 
-Global.rum = RUMMonitor.initialize()
+GlobalDatadog.rum = RUMMonitor.initialize()
 ```
 
 `predicate` must be a type that conforms to `UIKitRUMViewsPredicate` protocol:
@@ -134,7 +134,7 @@ Datadog.Configuration
    .track(firstPartyHosts: ["your.domain.com"])
    .build()
 
-Global.rum = RUMMonitor.initialize()
+GlobalDatadog.rum = RUMMonitor.initialize()
 ```
 Also, assign `DDURLSessionDelegate()` as a `delegate` of the `URLSession` you want to monitor, for example:
 ```swift
@@ -156,7 +156,7 @@ Datadog.Configuration
    .trackUIKitActions(true)
    .build()
 
-Global.rum = RUMMonitor.initialize()
+GlobalDatadog.rum = RUMMonitor.initialize()
 ```
 
 This makes the SDK track all significant taps occurring in the app. For privacy reasons, all interactions with the on-screen keyboard are ignored.
@@ -178,7 +178,7 @@ span.setTag(key: OTTags.error, value: true)
 
 ### RUM Views
 
-Use the following methods on `Global.rum` to manually collect RUM resources:
+Use the following methods on `GlobalDatadog.rum` to manually collect RUM resources:
 - `.startView(viewController:)`
 - `.stopView(viewController:)`
 
@@ -188,19 +188,19 @@ Example:
 
 override func viewDidAppear(_ animated: Bool) {
   super.viewDidAppear(animated)
-  Global.rum.startView(viewController: self)
+  GlobalDatadog.rum.startView(viewController: self)
 }
 
 override func viewDidDisappear(_ animated: Bool) {
   super.viewDidDisappear(animated)
-  Global.rum.stopView(viewController: self)
+  GlobalDatadog.rum.stopView(viewController: self)
 }
 ```
 For more details and available options, refer to the code documentation comments in `DDRUMMonitor` class.
 
 ### RUM Resources
 
-Use the following methods on `Global.rum` to manually collect RUM resources:
+Use the following methods on `GlobalDatadog.rum` to manually collect RUM resources:
 * `.startResourceLoading(resourceKey:request:)`
 * `.stopResourceLoading(resourceKey:response:)`
 * `.stopResourceLoadingWithError(resourceKey:error:)`
@@ -210,12 +210,12 @@ Example:
 ```swift
 // in your network client:
 
-Global.rum.startResourceLoading(
+GlobalDatadog.rum.startResourceLoading(
     resourceKey: "resource-key", 
     request: request
 )
 
-Global.rum.stopResourceLoading(
+GlobalDatadog.rum.stopResourceLoading(
     resourceKey: "resource-key",
     response: response
 )
@@ -234,14 +234,14 @@ or for continuous RUM actions (e.g: `.scroll`), use:
 * `.startUserAction(type:name:)`
 * and `.stopUserAction(type:)`
 
-on `Global.rum`.
+on `GlobalDatadog.rum`.
 
 Example:
 ```swift
 // in your `UIViewController`:
 
 @IBAction func didTapDownloadResourceButton(_ sender: Any) {
-    Global.rum.addUserAction(
+    GlobalDatadog.rum.addUserAction(
         type: .tap,
         name: (sender as? UIButton).currentTitle ?? "",
     )
@@ -254,7 +254,7 @@ For more details and available options, refer to the code documentation comments
 
 ### RUM Errors
 
-Use the following methods on `Global.rum` to manually collect RUM errors:
+Use the following methods on `GlobalDatadog.rum` to manually collect RUM errors:
 - `.addError(message:)`
 - `.addError(error:)`
 
@@ -262,7 +262,7 @@ Example:
 ```swift
 // anywhere in your code:
 
-Global.rum.addError(message: "error message.")
+GlobalDatadog.rum.addError(message: "error message.")
 ```
 
 For more details and available options, refer to the code documentation comments in `DDRUMMonitor` class.

@@ -25,11 +25,11 @@ internal class ViewController: UIViewController {
             .printLogsToConsole(true)
             .build()
 
-        Global.sharedTracer = Tracer.initialize(configuration: .init())
+        GlobalDatadog.sharedTracer = Tracer.initialize(configuration: .init())
 
         logger.info("It works")
 
         // Start span, but never finish it (no upload)
-        _ = Global.sharedTracer.startSpan(operationName: "This too")
+        _ = GlobalDatadog.sharedTracer.startSpan(operationName: "This too")
     }
 }

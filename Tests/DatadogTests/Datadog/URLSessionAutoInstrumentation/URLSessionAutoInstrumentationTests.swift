@@ -33,11 +33,11 @@ class URLSessionAutoInstrumentationTests: XCTestCase {
         }
 
         // When
-        Global.rum = RUMMonitor.initialize()
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
         // Then
         let resourcesHandler = URLSessionAutoInstrumentation.instance?.interceptor.handler as? URLSessionRUMResourcesHandler
-        XCTAssertTrue(resourcesHandler?.subscriber === Global.rum)
+        XCTAssertTrue(resourcesHandler?.subscriber === GlobalDatadog.rum)
     }
 }

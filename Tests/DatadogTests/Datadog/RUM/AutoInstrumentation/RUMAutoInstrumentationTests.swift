@@ -35,12 +35,12 @@ class RUMAutoInstrumentationTests: XCTestCase {
         defer { RUMAutoInstrumentation.instance = nil }
 
         // When
-        Global.rum = RUMMonitor.initialize()
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
         // Then
         let viewsHandler = RUMAutoInstrumentation.instance?.views?.handler as? UIKitRUMViewsHandler
-        XCTAssertTrue(viewsHandler?.subscriber === Global.rum)
+        XCTAssertTrue(viewsHandler?.subscriber === GlobalDatadog.rum)
     }
 
     func testGivenRUMUserActionsAutoInstrumentationEnabled_whenRUMMonitorIsRegistered_itSubscribesAsUserActionsHandler() throws {
@@ -58,12 +58,12 @@ class RUMAutoInstrumentationTests: XCTestCase {
         defer { RUMAutoInstrumentation.instance = nil }
 
         // When
-        Global.rum = RUMMonitor.initialize()
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
         // Then
         let userActionsHandler = RUMAutoInstrumentation.instance?.userActions?.handler as? UIKitRUMUserActionsHandler
-        XCTAssertTrue(userActionsHandler?.subscriber === Global.rum)
+        XCTAssertTrue(userActionsHandler?.subscriber === GlobalDatadog.rum)
     }
 
     /// Sanity check for not-allowed configuration.

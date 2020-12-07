@@ -14,7 +14,7 @@ import Foundation
 ///     var request = URLRequest(...)
 ///
 ///     let writer = HTTPHeadersWriter()
-///     let span = Global.sharedTracer.startSpan("network request")
+///     let span = GlobalDatadog.sharedTracer.startSpan("network request")
 ///     writer.inject(spanContext: span.context)
 ///
 ///     writer.tracePropagationHTTPHeaders.forEach { (field, value) in

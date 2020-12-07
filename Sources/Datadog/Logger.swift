@@ -322,7 +322,7 @@ public class Logger {
         }
 
         /// Enables the logs integration with active span API from Tracing.
-        /// If enabled all the logs will be bundled with the `Global.sharedTracer.activeSpan` trace and
+        /// If enabled all the logs will be bundled with the `GlobalDatadog.sharedTracer.activeSpan` trace and
         /// it will be possible to see all the logs sent during that specific trace.
         /// - Parameter enabled: `true` by default
         public func bundleWithTrace(_ enabled: Bool) -> Builder {

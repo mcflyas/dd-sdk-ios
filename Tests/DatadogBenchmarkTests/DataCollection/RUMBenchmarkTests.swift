@@ -10,16 +10,16 @@ import XCTest
 class RUMBenchmarkTests: BenchmarkTests {
     func testCreatingOneRUMEvent() {
         let viewController = UIViewController()
-        Global.rum.startView(viewController: viewController)
+        GlobalDatadog.rum.startView(viewController: viewController)
 
         measure {
-            Global.rum.addUserAction(type: .tap, name: "tap")
+            GlobalDatadog.rum.addUserAction(type: .tap, name: "tap")
         }
     }
 
     func testCreatingOneRUMEventWithAttributes() {
         let viewController = UIViewController()
-        Global.rum.startView(viewController: viewController)
+        GlobalDatadog.rum.startView(viewController: viewController)
 
         var attributes: [AttributeKey: AttributeValue] = [:]
         (0..<16).forEach { index in
@@ -27,7 +27,7 @@ class RUMBenchmarkTests: BenchmarkTests {
         }
 
         measure {
-            Global.rum.addUserAction(type: .tap, name: "tap", attributes: attributes)
+            GlobalDatadog.rum.addUserAction(type: .tap, name: "tap", attributes: attributes)
         }
     }
 }

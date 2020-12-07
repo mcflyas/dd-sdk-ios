@@ -127,7 +127,7 @@ public class DDRUMMonitor {
     ) {}
 
     /// Notifies that the Resource stops being loaded with an error.
-    /// If an `Error` object is received upon Resource failure, `Global.rum.stopResourceLoadingWithError(..., error:, ...)` may be used for convenience.
+    /// If an `Error` object is received upon Resource failure, `GlobalDatadog.rum.stopResourceLoadingWithError(..., error:, ...)` may be used for convenience.
     /// - Parameters:
     ///   - resourceKey: the key representing the Resource - must match the one used in `startResourceLoading(...)`.
     ///   - errorMessage: the message explaining the Resource failure.

@@ -793,8 +793,8 @@ class RUMMonitorTests: XCTestCase {
             appContext: .mockAny(),
             configuration: Datadog.Configuration.builderUsing(rumApplicationID: .mockAny(), clientToken: .mockAny(), environment: .mockAny()).build()
         )
-        Global.rum = RUMMonitor.initialize()
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
         // when
         _ = RUMMonitor.initialize()
@@ -803,7 +803,7 @@ class RUMMonitorTests: XCTestCase {
         XCTAssertEqual(
             printFunction.printedMessage,
             """
-            🔥 Datadog SDK usage error: The `RUMMonitor` instance was already created. Use existing `Global.rum` instead of initializing the `RUMMonitor` another time.
+            🔥 Datadog SDK usage error: The `RUMMonitor` instance was already created. Use existing `GlobalDatadog.rum` instead of initializing the `RUMMonitor` another time.
             """
         )
 
@@ -816,10 +816,10 @@ class RUMMonitorTests: XCTestCase {
             appContext: .mockAny(),
             configuration: .mockWith(rumApplicationID: "rum-123", rumEnabled: true)
         )
-        Global.rum = RUMMonitor.initialize()
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
-        let monitor = Global.rum.dd
+        let monitor = GlobalDatadog.rum.dd
         monitor.queue.sync {
             XCTAssertNil(monitor.debugging)
         }
@@ -858,7 +858,7 @@ class RUMMonitorTests: XCTestCase {
         let userActionsHandler = try XCTUnwrap(RUMAutoInstrumentation.instance?.userActions?.handler)
 
         // When
-        XCTAssertTrue(Global.rum is DDNoopRUMMonitor)
+        XCTAssertTrue(GlobalDatadog.rum is DDNoopRUMMonitor)
 
         // Then
         resourcesHandler.notify_taskInterceptionCompleted(interception: TaskInterception(request: .mockAny(), isFirstParty: .mockAny()))
@@ -866,8 +866,8 @@ class RUMMonitorTests: XCTestCase {
         XCTAssertEqual(
             output.recordedLog?.message,
             """
-            RUM Resource was completed, but no `RUMMonitor` is registered on `Global.rum`. RUM auto instrumentation will not work.
-            Make sure `Global.rum = RUMMonitor.initialize()` is called before any network request is send.
+            RUM Resource was completed, but no `RUMMonitor` is registered on `GlobalDatadog.rum`. RUM auto instrumentation will not work.
+            Make sure `GlobalDatadog.rum = RUMMonitor.initialize()` is called before any network request is send.
             """
         )
 
@@ -876,8 +876,8 @@ class RUMMonitorTests: XCTestCase {
         XCTAssertEqual(
             output.recordedLog?.message,
             """
-            RUM View was started, but no `RUMMonitor` is registered on `Global.rum`. RUM auto instrumentation will not work.
-            Make sure `Global.rum = RUMMonitor.initialize()` is called before any `UIViewController` is presented.
+            RUM View was started, but no `RUMMonitor` is registered on `GlobalDatadog.rum`. RUM auto instrumentation will not work.
+            Make sure `GlobalDatadog.rum = RUMMonitor.initialize()` is called before any `UIViewController` is presented.
             """
         )
 
@@ -892,8 +892,8 @@ class RUMMonitorTests: XCTestCase {
         XCTAssertEqual(
             output.recordedLog?.message,
             """
-            RUM Action was detected, but no `RUMMonitor` is registered on `Global.rum`. RUM auto instrumentation will not work.
-            Make sure `Global.rum = RUMMonitor.initialize()` is called before any action happens.
+            RUM Action was detected, but no `RUMMonitor` is registered on `GlobalDatadog.rum`. RUM auto instrumentation will not work.
+            Make sure `GlobalDatadog.rum = RUMMonitor.initialize()` is called before any action happens.
             """
         )
 

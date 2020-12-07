@@ -80,12 +80,12 @@ Datadog.initialize(
     Datadog.verbosityLevel = .debug
     ```
 
-3. Datadog tracer implements the [Open Tracing standard][8]. Configure and register the `Tracer` globally as Open Tracing `Global.sharedTracer`. You only need to do it once, usually in your `AppDelegate` code:
+3. Datadog tracer implements the [Open Tracing standard][8]. Configure and register the `Tracer` globally as Open Tracing `GlobalDatadog.sharedTracer`. You only need to do it once, usually in your `AppDelegate` code:
 
     ```swift
     import Datadog
 
-    Global.sharedTracer = Tracer.initialize(
+    GlobalDatadog.sharedTracer = Tracer.initialize(
         configuration: Tracer.Configuration(
             sendNetworkInfo: true
         )
@@ -95,7 +95,7 @@ Datadog.initialize(
 4. Instrument your code using the following methods:
 
     ```swift
-    let span = Global.sharedTracer.startSpan(operationName: "<span_name>")
+    let span = GlobalDatadog.sharedTracer.startSpan(operationName: "<span_name>")
     // do something you want to measure ...
     // ... then, when the operation is finished:
     span.finish()
@@ -104,7 +104,7 @@ Datadog.initialize(
 5. (Optional) - Set child-parent relationship between your spans:
 
     ```swift
-    let responseDecodingSpan = Global.sharedTracer.startSpan(
+    let responseDecodingSpan = GlobalDatadog.sharedTracer.startSpan(
         operationName: "response decoding",
         childOf: networkRequestSpan.context // make it a child of `networkRequestSpan`
     )
@@ -140,10 +140,10 @@ Datadog.initialize(
 
     var request: URLRequest = ... // the request to your API
 
-    let span = Global.sharedTracer.startSpan(operationName: "network request")
+    let span = GlobalDatadog.sharedTracer.startSpan(operationName: "network request")
 
     let headersWritter = HTTPHeadersWriter()
-    Global.sharedTracer.inject(spanContext: span.context, writer: headersWritter)
+    GlobalDatadog.sharedTracer.inject(spanContext: span.context, writer: headersWritter)
 
     for (headerField, value) in headersWritter.tracePropagationHTTPHeaders {
         request.addValue(value, forHTTPHeaderField: headerField)

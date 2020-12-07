@@ -283,7 +283,7 @@ extension Datadog {
             /// Enables or disables the tracing feature.
             ///
             /// This option is meant to opt-out from using Datadog Tracing entirely, no matter of your environment or build configuration. If you need to
-            /// disable tracing only for certain scenarios (e.g. in `DEBUG` build configuration), do not set `Global.sharedTracer` to `Tracer`,
+            /// disable tracing only for certain scenarios (e.g. in `DEBUG` build configuration), do not set `GlobalDatadog.sharedTracer` to `Tracer`,
             /// and your app will be using the no-op tracer instance.
             ///
             /// If `enableTracing(false)` is set, the SDK won't instantiate underlying resources required for
@@ -346,7 +346,7 @@ extension Datadog {
             /// Enables or disables the RUM feature.
             ///
             /// This option is meant to opt-out from using Datadog RUM entirely, no matter of your environment or build configuration. If you need to
-            /// disable RUM only for certain scenarios (e.g. in `DEBUG` build configuration), you may prefer to not register `RUMMonitor` on `Global.rum`
+            /// disable RUM only for certain scenarios (e.g. in `DEBUG` build configuration), you may prefer to not register `RUMMonitor` on `GlobalDatadog.rum`
             /// and let your app use the no-op monitor instance.
             ///
             /// If `enableRUM(false)` is set, the SDK won't instantiate underlying resources required for

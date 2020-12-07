@@ -5,7 +5,7 @@
 */
 
 /// Namespace storing global Datadog components.
-public struct Global {
+public struct GlobalDatadog {
     /// Shared tracer instance to use throughout the app.
     public static var sharedTracer: OTTracer = DDNoopGlobals.tracer
 

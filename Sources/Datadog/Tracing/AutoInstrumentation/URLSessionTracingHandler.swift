@@ -17,11 +17,11 @@ internal class URLSessionTracingHandler: URLSessionInterceptionHandler {
         if !interception.isFirstPartyRequest {
             return // `Span` should be only send for 1st party requests
         }
-        guard let tracer = Global.sharedTracer as? Tracer else {
+        guard let tracer = GlobalDatadog.sharedTracer as? Tracer else {
             userLogger.warn(
                 """
-                `URLSession` request was completed, but no `Tracer` is registered on `Global.sharedTracer`. Tracing auto instrumentation will not work.
-                Make sure `Global.sharedTracer = Tracer.initialize()` is called before any network request is send.
+                `URLSession` request was completed, but no `Tracer` is registered on `GlobalDatadog.sharedTracer`. Tracing auto instrumentation will not work.
+                Make sure `GlobalDatadog.sharedTracer = Tracer.initialize()` is called before any network request is send.
                 """
             )
             return

@@ -9,10 +9,10 @@ import XCTest
 
 class GlobalTests: XCTestCase {
     func testWhenTracerIsNotInitialized_itGivesNoOpImplementation() {
-        XCTAssertTrue(Global.sharedTracer is DDNoopTracer)
+        XCTAssertTrue(GlobalDatadog.sharedTracer is DDNoopTracer)
     }
 
     func testWhenRUMMonitorIsNotInitialized_itGivesNoOpImplementation() {
-        XCTAssertTrue(Global.rum is DDNoopRUMMonitor)
+        XCTAssertTrue(GlobalDatadog.rum is DDNoopRUMMonitor)
     }
 }

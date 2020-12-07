@@ -12,12 +12,12 @@ class URLSessionTracingHandlerTests: XCTestCase {
     private let handler = URLSessionTracingHandler()
 
     override func setUp() {
-        Global.sharedTracer = Tracer.mockWith(spanOutput: spanOutput)
+        GlobalDatadog.sharedTracer = Tracer.mockWith(spanOutput: spanOutput)
         super.setUp()
     }
 
     override func tearDown() {
-        Global.sharedTracer = DDNoopGlobals.tracer
+        GlobalDatadog.sharedTracer = DDNoopGlobals.tracer
         super.tearDown()
     }
 

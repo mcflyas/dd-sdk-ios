@@ -64,10 +64,10 @@ public class Tracer: OTTracer {
     ///   - configuration: the tracer configuration obtained using `Tracer.Configuration()`.
     public static func initialize(configuration: Configuration) -> OTTracer {
         do {
-            if Global.sharedTracer is Tracer {
+            if GlobalDatadog.sharedTracer is Tracer {
                 throw ProgrammerError(
                     description: """
-                    The `Tracer` instance was already created. Use existing `Global.sharedTracer` instead of initializing the `Tracer` another time.
+                    The `Tracer` instance was already created. Use existing `GlobalDatadog.sharedTracer` instead of initializing the `Tracer` another time.
                     """
                 )
             }

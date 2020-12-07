@@ -115,15 +115,15 @@ internal enum RUMInternalErrorSource {
 /// A class enabling Datadog RUM features.
 ///
 /// `RUMMonitor` allows recording user events that can be explored and analyzed in Datadog Dashboards.
-/// There can be only one active `RUMMonitor`, and it should be registered/retrieved through `Global.rum`:
+/// There can be only one active `RUMMonitor`, and it should be registered/retrieved through `GlobalDatadog.rum`:
 ///
 ///     import Datadog
 ///
 ///     // register
-///     Global.rum = RUMMonitor.initialize()
+///     GlobalDatadog.rum = RUMMonitor.initialize()
 ///
 ///     // use
-///     Global.rum.startView(...)
+///     GlobalDatadog.rum.startView(...)
 ///
 public class RUMMonitor: DDRUMMonitor, RUMCommandSubscriber {
     /// The root scope of RUM monitoring.
@@ -147,10 +147,10 @@ public class RUMMonitor: DDRUMMonitor, RUMCommandSubscriber {
     /// Initializes the Datadog RUM Monitor.
     public static func initialize() -> DDRUMMonitor {
         do {
-            if Global.rum is RUMMonitor {
+            if GlobalDatadog.rum is RUMMonitor {
                 throw ProgrammerError(
                     description: """
-                    The `RUMMonitor` instance was already created. Use existing `Global.rum` instead of initializing the `RUMMonitor` another time.
+                    The `RUMMonitor` instance was already created. Use existing `GlobalDatadog.rum` instead of initializing the `RUMMonitor` another time.
                     """
                 )
             }

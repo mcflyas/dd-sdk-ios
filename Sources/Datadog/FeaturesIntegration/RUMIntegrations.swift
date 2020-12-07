@@ -7,7 +7,7 @@
 import Foundation
 
 /// Global `RUMMonitor` (if registered).
-private var rumMonitor: RUMMonitor? { Global.rum as? RUMMonitor }
+private var rumMonitor: RUMMonitor? { GlobalDatadog.rum as? RUMMonitor }
 
 /// Integration providing the current RUM context attributes.
 internal struct RUMContextIntegration {

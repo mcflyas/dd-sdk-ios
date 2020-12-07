@@ -176,7 +176,7 @@ internal class URLSessionInterceptor: URLSessionInterceptorType {
     // MARK: - SpanContext Injection & Extraction
 
     private func injectSpanContext(into firstPartyRequest: URLRequest) -> URLRequest {
-        guard let tracer = Global.sharedTracer as? Tracer else {
+        guard let tracer = GlobalDatadog.sharedTracer as? Tracer else {
             return firstPartyRequest
         }
 
@@ -198,7 +198,7 @@ internal class URLSessionInterceptor: URLSessionInterceptorType {
     }
 
     private func extractSpanContext(from request: URLRequest) -> DDSpanContext? {
-        guard let tracer = Global.sharedTracer as? Tracer,
+        guard let tracer = GlobalDatadog.sharedTracer as? Tracer,
               let headers = request.allHTTPHeaderFields else {
             return nil
         }

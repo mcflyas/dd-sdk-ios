@@ -18,7 +18,7 @@ public class OTGlobal: NSObject {
         sharedTracer = ddtracer
 
         // We must also set the Swift `sharedTracer` as it's used internally by auto-instrumentation feature.
-        Global.sharedTracer = ddtracer.swiftTracer
+        GlobalDatadog.sharedTracer = ddtracer.swiftTracer
     }
 
     public internal(set) static var sharedTracer: OTTracer = noopTracer

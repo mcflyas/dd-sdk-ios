@@ -187,15 +187,15 @@ class DDTracerTests: XCTestCase {
         let objcTracer = DDTracer(swiftTracer: swiftTracer)
 
         let previousObjcTracer = OTGlobal.sharedTracer
-        let previousSwiftTracer = Global.sharedTracer
+        let previousSwiftTracer = GlobalDatadog.sharedTracer
         OTGlobal.initSharedTracer(objcTracer)
         defer {
             OTGlobal.sharedTracer = previousObjcTracer
-            Global.sharedTracer = previousSwiftTracer
+            GlobalDatadog.sharedTracer = previousSwiftTracer
         }
 
         XCTAssertTrue(OTGlobal.sharedTracer === objcTracer)
-        XCTAssertTrue(Global.sharedTracer as? Tracer === swiftTracer)
+        XCTAssertTrue(GlobalDatadog.sharedTracer as? Tracer === swiftTracer)
     }
 
     // MARK: - Usage errors
@@ -206,7 +206,7 @@ class DDTracerTests: XCTestCase {
         OTGlobal.initSharedTracer(noopTracer)
 
         XCTAssertTrue(OTGlobal.sharedTracer === previousObjcTracer)
-        XCTAssertFalse(Global.sharedTracer is Tracer)
+        XCTAssertFalse(GlobalDatadog.sharedTracer is Tracer)
     }
 
     func testsWhenUsingUnexpectedOTSpanContext() throws {

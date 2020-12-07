@@ -126,8 +126,8 @@ class URLSessionInterceptorTests: XCTestCase {
             configuration: mockConfiguration(tracingInstrumentationEnabled: true, rumInstrumentationEnabled: true),
             handler: handler
         )
-        Global.sharedTracer = Tracer.mockAny()
-        defer { Global.sharedTracer = DDNoopGlobals.tracer }
+        GlobalDatadog.sharedTracer = Tracer.mockAny()
+        defer { GlobalDatadog.sharedTracer = DDNoopGlobals.tracer }
 
         // When
         let interceptedFirstPartyRequest = interceptor.modify(request: firstPartyRequest)
@@ -156,8 +156,8 @@ class URLSessionInterceptorTests: XCTestCase {
             configuration: mockConfiguration(tracingInstrumentationEnabled: true, rumInstrumentationEnabled: false),
             handler: handler
         )
-        Global.sharedTracer = Tracer.mockAny()
-        defer { Global.sharedTracer = DDNoopGlobals.tracer }
+        GlobalDatadog.sharedTracer = Tracer.mockAny()
+        defer { GlobalDatadog.sharedTracer = DDNoopGlobals.tracer }
 
         // When
         let interceptedFirstPartyRequest = interceptor.modify(request: firstPartyRequest)
@@ -185,8 +185,8 @@ class URLSessionInterceptorTests: XCTestCase {
             configuration: mockConfiguration(tracingInstrumentationEnabled: false, rumInstrumentationEnabled: true),
             handler: handler
         )
-        Global.sharedTracer = Tracer.mockAny()
-        defer { Global.sharedTracer = DDNoopGlobals.tracer }
+        GlobalDatadog.sharedTracer = Tracer.mockAny()
+        defer { GlobalDatadog.sharedTracer = DDNoopGlobals.tracer }
 
         // When
         let interceptedFirstPartyRequest = interceptor.modify(request: firstPartyRequest)
@@ -205,7 +205,7 @@ class URLSessionInterceptorTests: XCTestCase {
             configuration: mockConfiguration(tracingInstrumentationEnabled: true, rumInstrumentationEnabled: .random()),
             handler: handler
         )
-        XCTAssertTrue(Global.sharedTracer is DDNoopTracer)
+        XCTAssertTrue(GlobalDatadog.sharedTracer is DDNoopTracer)
 
         // When
         let interceptedFirstPartyRequest = interceptor.modify(request: firstPartyRequest)
@@ -240,8 +240,8 @@ class URLSessionInterceptorTests: XCTestCase {
             configuration: mockConfiguration(tracingInstrumentationEnabled: true, rumInstrumentationEnabled: .random()),
             handler: handler
         )
-        Global.sharedTracer = Tracer.mockAny()
-        defer { Global.sharedTracer = DDNoopGlobals.tracer }
+        GlobalDatadog.sharedTracer = Tracer.mockAny()
+        defer { GlobalDatadog.sharedTracer = DDNoopGlobals.tracer }
 
         let interceptedFirstPartyRequest = interceptor.modify(request: firstPartyRequest)
         let interceptedThirdPartyRequest = interceptor.modify(request: thirdPartyRequest)

@@ -50,8 +50,8 @@ internal class URLSessionRUMResourcesHandler: URLSessionInterceptionHandler {
         if subscriber == nil {
             userLogger.warn(
                 """
-                RUM Resource was completed, but no `RUMMonitor` is registered on `Global.rum`. RUM auto instrumentation will not work.
-                Make sure `Global.rum = RUMMonitor.initialize()` is called before any network request is send.
+                RUM Resource was completed, but no `RUMMonitor` is registered on `GlobalDatadog.rum`. RUM auto instrumentation will not work.
+                Make sure `GlobalDatadog.rum = RUMMonitor.initialize()` is called before any network request is send.
                 """
             )
         }

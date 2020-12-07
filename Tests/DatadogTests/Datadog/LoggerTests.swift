@@ -506,9 +506,9 @@ class LoggerTests: XCTestCase {
 
         // given
         let logger = Logger.builder.build()
-        Global.rum = RUMMonitor.initialize()
-        Global.rum.startView(viewController: mockView)
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        GlobalDatadog.rum.startView(viewController: mockView)
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
         // when
         logger.info("info message")
@@ -547,7 +547,7 @@ class LoggerTests: XCTestCase {
 
         // given
         let logger = Logger.builder.build()
-        XCTAssertTrue(Global.rum is DDNoopRUMMonitor)
+        XCTAssertTrue(GlobalDatadog.rum is DDNoopRUMMonitor)
 
         // when
         logger.info("info message")
@@ -574,9 +574,9 @@ class LoggerTests: XCTestCase {
 
         // given
         let logger = Logger.builder.build()
-        Global.rum = RUMMonitor.initialize()
-        Global.rum.startView(viewController: mockView)
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        GlobalDatadog.rum.startView(viewController: mockView)
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
         // when
         logger.debug("debug message")
@@ -614,11 +614,11 @@ class LoggerTests: XCTestCase {
 
         // given
         let logger = Logger.builder.build()
-        Global.sharedTracer = Tracer.initialize(configuration: .init())
-        defer { Global.sharedTracer = DDNoopGlobals.tracer }
+        GlobalDatadog.sharedTracer = Tracer.initialize(configuration: .init())
+        defer { GlobalDatadog.sharedTracer = DDNoopGlobals.tracer }
 
         // when
-        let span = Global.sharedTracer.startSpan(operationName: "span").setActive()
+        let span = GlobalDatadog.sharedTracer.startSpan(operationName: "span").setActive()
         logger.info("info message 1")
         span.finish()
         logger.info("info message 2")
@@ -652,7 +652,7 @@ class LoggerTests: XCTestCase {
 
         // given
         let logger = Logger.builder.build()
-        XCTAssertTrue(Global.sharedTracer is DDNoopTracer)
+        XCTAssertTrue(GlobalDatadog.sharedTracer is DDNoopTracer)
 
         // when
         logger.info("info message")

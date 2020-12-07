@@ -644,9 +644,9 @@ class TracerTests: XCTestCase {
 
         // given
         let tracer = Tracer.initialize(configuration: .init()).dd
-        Global.rum = RUMMonitor.initialize()
-        Global.rum.startView(viewController: mockView)
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        GlobalDatadog.rum.startView(viewController: mockView)
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
         // when
         let span = tracer.startSpan(operationName: "operation", tags: [:], startTime: Date())
@@ -677,7 +677,7 @@ class TracerTests: XCTestCase {
 
         // given
         let tracer = Tracer.initialize(configuration: .init()).dd
-        XCTAssertTrue(Global.rum is DDNoopRUMMonitor)
+        XCTAssertTrue(GlobalDatadog.rum is DDNoopRUMMonitor)
 
         // when
         let span = tracer.startSpan(operationName: "operation", tags: [:], startTime: Date())
@@ -705,9 +705,9 @@ class TracerTests: XCTestCase {
 
         // given
         let tracer = Tracer.initialize(configuration: .init()).dd
-        Global.rum = RUMMonitor.initialize()
-        Global.rum.startView(viewController: mockView)
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        GlobalDatadog.rum.startView(viewController: mockView)
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
         // when
         let errorSpan = tracer.startSpan(operationName: "operation name", tags: [OTTags.error: true])
@@ -733,9 +733,9 @@ class TracerTests: XCTestCase {
 
         // given
         let tracer = Tracer.initialize(configuration: .init()).dd
-        Global.rum = RUMMonitor.initialize()
-        Global.rum.startView(viewController: mockView)
-        defer { Global.rum = DDNoopRUMMonitor() }
+        GlobalDatadog.rum = RUMMonitor.initialize()
+        GlobalDatadog.rum.startView(viewController: mockView)
+        defer { GlobalDatadog.rum = DDNoopRUMMonitor() }
 
         // when
         let span = tracer.startSpan(operationName: "operation name")
@@ -978,8 +978,8 @@ class TracerTests: XCTestCase {
             appContext: .mockAny(),
             configuration: Datadog.Configuration.builderUsing(clientToken: .mockAny(), environment: .mockAny()).build()
         )
-        Global.sharedTracer = Tracer.initialize(configuration: .init())
-        defer { Global.sharedTracer = DDNoopGlobals.tracer }
+        GlobalDatadog.sharedTracer = Tracer.initialize(configuration: .init())
+        defer { GlobalDatadog.sharedTracer = DDNoopGlobals.tracer }
 
         // when
         _ = Tracer.initialize(configuration: .init())
@@ -988,7 +988,7 @@ class TracerTests: XCTestCase {
         XCTAssertEqual(
             printFunction.printedMessage,
             """
-            🔥 Datadog SDK usage error: The `Tracer` instance was already created. Use existing `Global.sharedTracer` instead of initializing the `Tracer` another time.
+            🔥 Datadog SDK usage error: The `Tracer` instance was already created. Use existing `GlobalDatadog.sharedTracer` instead of initializing the `Tracer` another time.
             """
         )
 
@@ -1011,7 +1011,7 @@ class TracerTests: XCTestCase {
         let tracingHandler = try XCTUnwrap(URLSessionAutoInstrumentation.instance?.interceptor.handler)
 
         // When
-        XCTAssertTrue(Global.sharedTracer is DDNoopTracer)
+        XCTAssertTrue(GlobalDatadog.sharedTracer is DDNoopTracer)
 
         // Then
         tracingHandler.notify_taskInterceptionCompleted(interception: TaskInterception(request: .mockAny(), isFirstParty: true))
@@ -1019,8 +1019,8 @@ class TracerTests: XCTestCase {
         XCTAssertEqual(
             output.recordedLog?.message,
             """
-            `URLSession` request was completed, but no `Tracer` is registered on `Global.sharedTracer`. Tracing auto instrumentation will not work.
-            Make sure `Global.sharedTracer = Tracer.initialize()` is called before any network request is send.
+            `URLSession` request was completed, but no `Tracer` is registered on `GlobalDatadog.sharedTracer`. Tracing auto instrumentation will not work.
+            Make sure `GlobalDatadog.sharedTracer = Tracer.initialize()` is called before any network request is send.
             """
         )
 
